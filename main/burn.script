@@ -1,0 +1,8 @@
+function init(self)
+	self.t = 0
+end
+
+function update(self, dt)
+	self.t = self.t + dt
+	go.set("#sprite", "time", vmath.vector4(self.t, 0, 0, 0))
+end
