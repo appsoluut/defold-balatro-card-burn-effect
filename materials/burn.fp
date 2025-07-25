@@ -1,12 +1,17 @@
+#version 140
 #define speed 1
 #define PI 3.1415926
 
-varying mediump vec4 position;
-varying mediump vec2 var_texcoord0;
+in mediump vec4 position;
+in mediump vec2 var_texcoord0;
+out lowp vec4 color_out;
 
 uniform lowp sampler2D texture_sampler;
-uniform lowp vec4 tint;
-uniform lowp vec4 time;
+uniform fragment_input
+{
+	lowp vec4 tint;
+	lowp vec4 time;
+};
 
 float random(vec2 st) {
 	return fract(sin(dot(st,vec2(94.23,48.127))+14.23)*1124.23);
@@ -58,5 +63,5 @@ void main()
 	vec2 uv = var_texcoord0.xy * res.xy - 0.5;
 	
 	// Pre-multiply alpha since all runtime textures already are
-	gl_FragColor = vec4(burn(texture2D(texture_sampler, var_texcoord0.xy), uv * vec2(res.x / res.y, 1.), time), 1.);
+	color_out = vec4(burn(texture(texture_sampler, var_texcoord0.xy), uv * vec2(res.x / res.y, 1.), time), 1.);
 }
